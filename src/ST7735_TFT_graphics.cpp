@@ -20,7 +20,7 @@ ST7735_TFT_graphics::ST7735_TFT_graphics(){}
 	@param y  row co-ord
 	@param color 565 16-bit
 */
-void ST7735_TFT_graphics ::TFTdrawPixel(uint8_t x, uint8_t y, uint16_t color) {
+void ST7735_TFT_graphics ::TFTdrawPixel(uint16_t x, uint16_t y, uint16_t color) {
 	if ((x >= _widthTFT) || (y >= _heightTFT))
 		return;
 	TFTsetAddrWindow(x, y, x + 1, y + 1);
@@ -36,7 +36,7 @@ void ST7735_TFT_graphics ::TFTdrawPixel(uint8_t x, uint8_t y, uint16_t color) {
   @param  y1  Height of window
   @note https://en.wikipedia.org/wiki/Bit_blit
  */
-void ST7735_TFT_graphics ::TFTsetAddrWindow(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1) {
+void ST7735_TFT_graphics ::TFTsetAddrWindow(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1) {
 	writeCommand(ST7735_CASET);
 	writeData(0);
 	writeData(x0 + _XStart);
@@ -59,7 +59,7 @@ void ST7735_TFT_graphics ::TFTsetAddrWindow(uint8_t x0, uint8_t y0, uint8_t x1, 
 	@param color color to fill  rectangle 565 16-bit
 	@note  uses spiWriteDataBuffer method
 */
-void ST7735_TFT_graphics ::TFTfillRectangle(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint16_t color) {
+void ST7735_TFT_graphics ::TFTfillRectangle(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t color) {
 	uint8_t hi, lo;
 
 	// Check bounds
@@ -94,7 +94,7 @@ void ST7735_TFT_graphics ::TFTfillRectangle(uint8_t x, uint8_t y, uint8_t w, uin
 	@param  color 565 16-bit
 */
 void ST7735_TFT_graphics ::TFTfillScreen(uint16_t color) {
-	TFTfillRectangle(0, 0, _widthTFT, _heightTFT, color);
+	TFTfillRect(0, 0, _widthTFT, _heightTFT, color);
 }
 
 /*!
@@ -104,7 +104,7 @@ void ST7735_TFT_graphics ::TFTfillScreen(uint16_t color) {
 	@param h The height of the line
 	@param color The color of the line 565 16 Bit color
 */
-void ST7735_TFT_graphics ::TFTdrawFastVLine(uint8_t x, uint8_t y, uint8_t h, uint16_t color) {
+void ST7735_TFT_graphics ::TFTdrawFastVLine(uint16_t x, uint16_t y, uint16_t h, uint16_t color) {
 	uint8_t hi, lo;
 	if ((x >= _widthTFT) || (y >= _heightTFT))
 		return;
@@ -130,7 +130,7 @@ void ST7735_TFT_graphics ::TFTdrawFastVLine(uint8_t x, uint8_t y, uint8_t h, uin
 	@param w The width of the line
 	@param color The color of the line 565 16 Bit color
 */
-void ST7735_TFT_graphics ::TFTdrawFastHLine(uint8_t x, uint8_t y, uint8_t w, uint16_t color) {
+void ST7735_TFT_graphics ::TFTdrawFastHLine(uint16_t x, uint16_t y, uint16_t w, uint16_t color) {
 	uint8_t hi, lo;
 	if ((x >= _widthTFT) || (y >= _heightTFT))
 		return;
@@ -263,7 +263,7 @@ void ST7735_TFT_graphics ::TFTfillCircle(int16_t x0, int16_t y0, int16_t r, uint
 	@param h height of the rectangle
 	@param color color to fill  rectangle 565 16-bit
 */
-void ST7735_TFT_graphics ::TFTdrawRectWH(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint16_t color) {
+void ST7735_TFT_graphics ::TFTdrawRectWH(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t color) {
 	TFTdrawFastHLine(x, y, w, color);
 	TFTdrawFastHLine(x, y + h - 1, w, color);
 	TFTdrawFastVLine(x, y, h, color);
@@ -321,7 +321,7 @@ void ST7735_TFT_graphics ::TFTdrawLine(int16_t x0, int16_t y0, int16_t x1, int16
 	@param h height of the rectangle
 	@param color color to fill  rectangle 565 16-bit
 */
-void ST7735_TFT_graphics ::TFTfillRect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint16_t color) {
+void ST7735_TFT_graphics ::TFTfillRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t color) {
 	int16_t i;
 	for (i = x; i < x + w; i++) {
 		TFTdrawFastVLine(i, y, h, color);
@@ -337,7 +337,7 @@ void ST7735_TFT_graphics ::TFTfillRect(uint8_t x, uint8_t y, uint8_t w, uint8_t 
 	@param r r: radius of the rounded edges
 	@param color color to fill  rectangle 565 16-bit
 */
-void ST7735_TFT_graphics ::TFTdrawRoundRect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint8_t r, uint16_t color) {
+void ST7735_TFT_graphics ::TFTdrawRoundRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t r, uint16_t color) {
 	TFTdrawFastHLine(x + r, y, w - 2 * r, color);
 	TFTdrawFastHLine(x + r, y + h - 1, w - 2 * r, color);
 	TFTdrawFastVLine(x, y + r, h - 2 * r, color);
@@ -357,7 +357,7 @@ void ST7735_TFT_graphics ::TFTdrawRoundRect(uint8_t x, uint8_t y, uint8_t w, uin
 	@param r r: radius of the rounded edges
 	@param color color to fill  rectangle 565 16-bit
 */
-void ST7735_TFT_graphics ::TFTfillRoundRect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint8_t r, uint16_t color) {
+void ST7735_TFT_graphics ::TFTfillRoundRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t r, uint16_t color) {
 	TFTfillRect(x + r, y, w - 2 * r, h, color);
 	fillCircleHelper(x + w - r - 1, y + r, r, 1, h - 2 * r - 1, color);
 	fillCircleHelper(x + r, y + r, r, 2, h - 2 * r - 1, color);
@@ -455,7 +455,7 @@ void ST7735_TFT_graphics ::TFTfillTriangle(int16_t x0, int16_t y0, int16_t x1, i
 	@param size 1-x
 	@note for font #1-6 only
 */
-void ST7735_TFT_graphics ::TFTdrawChar(uint8_t x, uint8_t y, uint8_t c, uint16_t color, uint16_t bg, uint8_t size) {
+void ST7735_TFT_graphics ::TFTdrawChar(uint16_t x, uint16_t y, uint8_t c, uint16_t color, uint16_t bg, uint8_t size) {
 
 	int8_t i, j;
 
@@ -520,7 +520,7 @@ void ST7735_TFT_graphics ::TFTsetTextWrap(bool w) {
 	@param size 1-x
 	@note for font #1-6 only
 */
-void ST7735_TFT_graphics ::TFTdrawText(uint8_t x, uint8_t y, char *ptext, uint16_t color, uint16_t bg, uint8_t size) {
+void ST7735_TFT_graphics ::TFTdrawText(uint16_t x, uint16_t y, char *ptext, uint16_t color, uint16_t bg, uint8_t size) {
 	uint8_t _cursorX, _cursorY;
 	uint16_t _textSize, i;
 	_cursorX = x, _cursorY = y;
@@ -670,7 +670,7 @@ void ST7735_TFT_graphics ::TFTFontNum(TFT_Font_Type_e FontNumber) {
 	@param backcolor icon background colors ,is bi-color
 	@param character  An array of unsigned chars containing icon data vertically addressed.
 */
-void ST7735_TFT_graphics ::TFTdrawIcon(uint8_t x, uint8_t y, uint8_t w, uint16_t color, uint16_t backcolor, const unsigned char character[]) {
+void ST7735_TFT_graphics ::TFTdrawIcon(uint16_t x, uint16_t y, uint16_t w, uint16_t color, uint16_t backcolor, const unsigned char character[]) {
 	if ((x >= _widthTFT) || (y >= _heightTFT))
 		return;
 	uint8_t value;
@@ -750,7 +750,7 @@ void ST7735_TFT_graphics ::TFTdrawBitmap(int16_t x, int16_t y, int16_t w, int16_
 	@param h height of the bitmap in pixels
 	@note 24 bit color converted to 16 bit color
 */
-void ST7735_TFT_graphics ::TFTdrawBitmap24(uint8_t x, uint8_t y, uint8_t *pBmp, char w, char h)
+void ST7735_TFT_graphics ::TFTdrawBitmap24(uint16_t x, uint16_t y, uint8_t *pBmp, char w, char h)
 {
 	uint8_t i, j;
 	uint16_t color;
@@ -798,7 +798,7 @@ void ST7735_TFT_graphics ::TFTdrawBitmap24(uint8_t x, uint8_t y, uint8_t *pBmp, 
 	@param w width of the bitmap in pixels
 	@param h height of the bitmap in pixels
 */
-void ST7735_TFT_graphics ::TFTdrawBitmap16(uint8_t x, uint8_t y, uint8_t *pBmp, char w, char h) {
+void ST7735_TFT_graphics ::TFTdrawBitmap16(uint16_t x, uint16_t y, uint8_t *pBmp, char w, char h) {
 	uint8_t i, j;
 	uint16_t color;
 	uint32_t ptr;
@@ -843,7 +843,7 @@ void ST7735_TFT_graphics ::TFTdrawBitmap16(uint8_t x, uint8_t y, uint8_t *pBmp, 
 	@param bg background color
 	@note for font 7,8 only
 */
-void ST7735_TFT_graphics ::TFTdrawCharNumFont(uint8_t x, uint8_t y, uint8_t c, uint16_t color , uint16_t bg)
+void ST7735_TFT_graphics ::TFTdrawCharNumFont(uint16_t x, uint16_t y, uint8_t c, uint16_t color , uint16_t bg)
 {
 	if (_FontNumber < TFTFont_Bignum)
 	{
@@ -894,7 +894,7 @@ void ST7735_TFT_graphics ::TFTdrawCharNumFont(uint8_t x, uint8_t y, uint8_t c, u
 	@param bg background color
 	@note for font 7,8 only
 */
-void ST7735_TFT_graphics ::TFTdrawTextNumFont(uint8_t x, uint8_t y, char *pText, uint16_t color, uint16_t bg)
+void ST7735_TFT_graphics ::TFTdrawTextNumFont(uint16_t x, uint16_t y, char *pText, uint16_t color, uint16_t bg)
 {
 	if (_FontNumber < TFTFont_Bignum)
 	{
@@ -964,7 +964,7 @@ void ST7735_TFT_graphics::writeCommand(uint8_t spicmdbyte) {
 	@brief Write an SPI data byte to device
 	@param spidatabyte byte to send
 */
-void ST7735_TFT_graphics ::writeData(uint8_t spidatabyte) {
+void ST7735_TFT_graphics ::writeData(uint16_t spidatabyte) {
 	TFT_DC_SetHigh;
 	if (_hardwareSPI == false){TFT_CS_SetLow;}
 	spiWrite(spidatabyte);
@@ -991,7 +991,7 @@ void ST7735_TFT_graphics ::spiWriteDataBuffer(uint8_t* spidata, uint32_t len) {
 	@brief  Write byte to SPI
 	@param spidata byte to write
 */
-void ST7735_TFT_graphics::spiWrite(uint8_t spidata) {
+void ST7735_TFT_graphics::spiWrite(uint16_t spidata) {
 	if (_hardwareSPI == false)
 	{
 		spiWriteSoftware(spidata);
@@ -1005,7 +1005,7 @@ void ST7735_TFT_graphics::spiWrite(uint8_t spidata) {
 	@param spidata byte to send
 	@note uses TFT_HIGHFREQ_DELAY to slowdown software SPI if CPU frequency too fast
 */
-void ST7735_TFT_graphics::spiWriteSoftware(uint8_t spidata) {
+void ST7735_TFT_graphics::spiWriteSoftware(uint16_t spidata) {
 	uint8_t i;
 	for (i = 0; i < 8; i++) {
 		TFT_SDATA_SetLow;

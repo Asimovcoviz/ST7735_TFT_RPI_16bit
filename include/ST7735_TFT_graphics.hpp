@@ -72,22 +72,22 @@ class ST7735_TFT_graphics : public Print {
 	}; 
 	
 	virtual size_t write(uint8_t);
-	void TFTsetAddrWindow(uint8_t, uint8_t, uint8_t, uint8_t);
+	void TFTsetAddrWindow(uint16_t, uint16_t, uint16_t, uint16_t);
 	void TFTfillScreen(uint16_t color);
 	void TFTsetCursor(int16_t x, int16_t y);
 	
 	// Shapes and lines
-	void TFTdrawPixel(uint8_t, uint8_t, uint16_t);
+	void TFTdrawPixel(uint16_t, uint16_t, uint16_t);
 	void TFTdrawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1, uint16_t color);
-	void TFTdrawFastVLine(uint8_t x, uint8_t y, uint8_t h, uint16_t color);
-	void TFTdrawFastHLine(uint8_t x, uint8_t y, uint8_t w, uint16_t color);
+	void TFTdrawFastVLine(uint16_t x, uint16_t y, uint16_t h, uint16_t color);
+	void TFTdrawFastHLine(uint16_t x, uint16_t y, uint16_t w, uint16_t color);
 
-	void TFTdrawRectWH(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint16_t color);
-	void TFTfillRectangle(uint8_t, uint8_t, uint8_t, uint8_t, uint16_t);
-	void TFTfillRect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint16_t color);
+	void TFTdrawRectWH(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t color);
+	void TFTfillRectangle(uint16_t, uint16_t, uint16_t, uint16_t, uint16_t);
+	void TFTfillRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t color);
 
-	void TFTdrawRoundRect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint8_t r, uint16_t color);
-	void TFTfillRoundRect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint8_t r, uint16_t color);
+	void TFTdrawRoundRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t r, uint16_t color);
+	void TFTfillRoundRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t r, uint16_t color);
 	
 	void TFTdrawCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color);
 	void TFTfillCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color);
@@ -98,19 +98,19 @@ class ST7735_TFT_graphics : public Print {
 	// Text
 	void TFTsetTextWrap(bool w);
 	void TFTFontNum(TFT_Font_Type_e FontNumber);
-	void TFTdrawChar(uint8_t x, uint8_t y, uint8_t c, uint16_t color, uint16_t bg, uint8_t size);
-	void TFTdrawText(uint8_t x, uint8_t y, char *_text, uint16_t color, uint16_t bg, uint8_t size);
-	void TFTdrawCharNumFont(uint8_t x, uint8_t y, uint8_t c, uint16_t color ,uint16_t bg);
-	void TFTdrawTextNumFont(uint8_t x, uint8_t y, char *pText, uint16_t color, uint16_t bg);
+	void TFTdrawChar(uint16_t x, uint16_t y, uint8_t c, uint16_t color, uint16_t bg, uint8_t size);
+	void TFTdrawText(uint16_t x, uint16_t y, char *_text, uint16_t color, uint16_t bg, uint8_t size);
+	void TFTdrawCharNumFont(uint16_t x, uint16_t y, uint8_t c, uint16_t color ,uint16_t bg);
+	void TFTdrawTextNumFont(uint16_t x, uint16_t y, char *pText, uint16_t color, uint16_t bg);
 	void setTextColor(uint16_t c);
 	void setTextColor(uint16_t c, uint16_t bg);
 	void setTextSize(uint8_t s);
 	
 	// Bitmap & Icon
-	void TFTdrawIcon(uint8_t x, uint8_t y, uint8_t w, uint16_t color, uint16_t bgcolor, const unsigned char character[]);
+	void TFTdrawIcon(uint16_t x, uint16_t y, uint16_t w, uint16_t color, uint16_t bgcolor, const unsigned char character[]);
 	void TFTdrawBitmap(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color, uint16_t bgcolor, uint8_t *pBmp);
-	void TFTdrawBitmap24(uint8_t x, uint8_t y, uint8_t *pBmp, char w, char h);
-	void TFTdrawBitmap16(uint8_t x, uint8_t y, uint8_t *pBmp, char w, char h);
+	void TFTdrawBitmap24(uint16_t x, uint16_t y, uint8_t *pBmp, char w, char h);
+	void TFTdrawBitmap16(uint16_t x, uint16_t y, uint8_t *pBmp, char w, char h);
 	
 	
 protected:
@@ -121,10 +121,11 @@ protected:
 	void fillCircleHelper(int16_t x0, int16_t y0, int16_t r, uint8_t cornername, int16_t delta, uint16_t color);
 	
 	void writeCommand(uint8_t);
-	void writeData(uint8_t);
-	void spiWrite(uint8_t);
-	void spiWriteSoftware(uint8_t spidata);
+	void writeData(uint16_t);
+	void spiWrite(uint16_t);
+	void spiWriteSoftware(uint16_t spidata);
 	void spiWriteDataBuffer(uint8_t* spidata, uint32_t len);
+	void spiWriteDataBuffer(uint16_t* spidata, uint32_t len);
 	
 	bool _hardwareSPI=true; /**< True for Hardware SPI on , false fpr Software SPI on*/
 	
